@@ -25,7 +25,7 @@ After the application loads just navigate to localhost:8080 and start using the 
 A ready made jar file is provided  in `./target/moviebook-runnable.jar`
 
 #### Requirements
-Java openjdk-8 or openjdk-11 must be installed
+Java openjdk-11 must be installed
 
 #### Procedure
 Navigate to project folder and you can start the application by `java -jar target/moviebook-runnable.jar` 
