@@ -6,7 +6,7 @@ social​ ​sharing​ ​platform​ ​where​ ​users​ ​can​ ​shar
 ## Introduction
 This application was create within the scope of of my graduate paper. The main programming framework used is **Spring Boot 2.1.7.RELEASE** with **Thymeleaf**. 
 The dependencies were check for vulnerabilities using the OWASP plugin and as expected _CVE-2019-12384, CVE-2019-12814, CVE-2019-14379, CVE-2019-14439, CVE-2018-10237, CVE-2018-1258_ were identified that do not affect the project at the current scope.
-Other framework/libraries used are Lombok and Mapstruct. The project was primarily developed using **openjdk-11** and it maintains compatibility and is tested on **openjdk-8** as well for building and deployment. 
+Other framework/libraries used are Lombok and Mapstruct. The project was primarily developed using **openjdk-11**. 
  
 ## Installation
 The following methods can be used  
