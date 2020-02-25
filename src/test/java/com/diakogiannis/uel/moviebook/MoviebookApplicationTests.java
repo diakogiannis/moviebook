@@ -26,20 +26,16 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 public class MoviebookApplicationTests {
 
-    @Autowired
-    private WebApplicationContext context;
-
-    @Autowired
-    private MockMvc mockMvc;
-
-    @Autowired
-    private UserService userService;
-
-    @Autowired
-    MovieService movieService;
-
     private static Users user1;
     private static Movie movie1;
+    @Autowired
+    MovieService movieService;
+    @Autowired
+    private WebApplicationContext context;
+    @Autowired
+    private MockMvc mockMvc;
+    @Autowired
+    private UserService userService;
 
     @Before
     public void init() {
@@ -47,9 +43,7 @@ public class MoviebookApplicationTests {
         user1 = new Users("foo", "bar", "foo", "bar", true);
 
 
-
     }
-
 
 
     @WithMockUser("sa")
@@ -73,10 +67,9 @@ public class MoviebookApplicationTests {
     //Test the user can login after registration
     @Test
     public void registerUser() throws Exception {
-            Users users = userService.registerUser(user1);
-            mockMvc.perform(get("/something-possibly-secured").with(httpBasic(users.getUsername(), users.getPassword())));
+        Users users = userService.registerUser(user1);
+        mockMvc.perform(get("/something-possibly-secured").with(httpBasic(users.getUsername(), users.getPassword())));
     }
-
 
 
 }

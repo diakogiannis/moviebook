@@ -32,6 +32,9 @@ import java.util.stream.StreamSupport;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class MovieTests {
 
+    private static Users user1;
+    private static Users user2;
+    private static Movie movie1;
     @Autowired
     MovieService movieService;
     @Autowired
@@ -42,10 +45,6 @@ public class MovieTests {
     MovieRepository movieRepository;
     @Autowired
     RatingRepository ratingRepository;
-
-    private static Users user1;
-    private static Users user2;
-    private static Movie movie1;
 
     @Before
     public void init() throws UserExistsException {
@@ -81,15 +80,15 @@ public class MovieTests {
     @Test
     public void saveMovie() {
 
-        Movie savedMovie = movieService.saveNewMovie(movie1,user1.getUsername());
+        Movie savedMovie = movieService.saveNewMovie(movie1, user1.getUsername());
         Assert.assertNotNull(savedMovie);
         Assert.assertNotNull(movieRepository.findMovie(savedMovie.getMovieId()));
 
     }
 
     @Test(expected = AuthenticationCredentialsNotFoundException.class)
-    public void saveMovieUnAuthorised()  {
-        Movie savedMovie = movieService.saveNewMovie(movie1,user1.getUsername());
+    public void saveMovieUnAuthorised() {
+        Movie savedMovie = movieService.saveNewMovie(movie1, user1.getUsername());
         Assert.assertNotNull(savedMovie);
         Assert.assertNotNull(movieRepository.findMovie(savedMovie.getMovieId()));
 

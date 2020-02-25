@@ -1,12 +1,12 @@
 package com.diakogiannis.uel.moviebook.service;
 
-import com.diakogiannis.uel.moviebook.exceptions.UserExistsException;
-import com.diakogiannis.uel.moviebook.repository.AuthoritiesRepository;
-import com.diakogiannis.uel.moviebook.repository.UserRepository;
 import com.diakogiannis.uel.moviebook.enums.RolesEnum;
+import com.diakogiannis.uel.moviebook.exceptions.UserExistsException;
 import com.diakogiannis.uel.moviebook.model.dto.UserDetailsDTO;
 import com.diakogiannis.uel.moviebook.model.entity.users.Authorities;
 import com.diakogiannis.uel.moviebook.model.entity.users.Users;
+import com.diakogiannis.uel.moviebook.repository.AuthoritiesRepository;
+import com.diakogiannis.uel.moviebook.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,6 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.UUID;
-
 
 
 @Slf4j
@@ -38,7 +37,6 @@ public class UserServiceImpl implements UserService {
     private EntityManager em;
 
     /**
-     *
      * @param users
      * @return
      * @throws UserExistsException
@@ -60,23 +58,21 @@ public class UserServiceImpl implements UserService {
     }
 
     /**
-     *
      * @param username
      * @return
      */
     @Override
-    public UserDetailsDTO getUserDetails(String username){
+    public UserDetailsDTO getUserDetails(String username) {
         Users user = findUserByUsername(username);
-        return new UserDetailsDTO(user.getUserId(),user.getUsername(),user.getFirstname(),user.getLastname());
+        return new UserDetailsDTO(user.getUserId(), user.getUsername(), user.getFirstname(), user.getLastname());
     }
 
     /**
-     *
      * @param username
      * @return
      */
     @Override
-    public Users findUserByUsername(String username){
+    public Users findUserByUsername(String username) {
         return userRepository.findByUsername(username);
 
     }

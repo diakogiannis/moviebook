@@ -12,7 +12,7 @@ import javax.persistence.QueryHint;
 import java.util.List;
 import java.util.Optional;
 
-public interface RatingRepository extends JpaRepository<Rating,Long> {
+public interface RatingRepository extends JpaRepository<Rating, Long> {
 
     @QueryHints(value = {@QueryHint(name = org.hibernate.jpa.QueryHints.HINT_READONLY, value = "true")})
     @Query("from Rating r left join fetch r.movie  where r.user.username = :username and r.movie.movieId = :movieId")
@@ -25,7 +25,6 @@ public interface RatingRepository extends JpaRepository<Rating,Long> {
     @Modifying(clearAutomatically = true)
     @Query("update Rating r set r.isLike=:isLike where r.ratingId=:ratingId")
     int updateLike(@Param("isLike") Boolean isLike, @Param("ratingId") Long ratingId);
-
 
 
 }

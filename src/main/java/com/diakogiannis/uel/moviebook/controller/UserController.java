@@ -1,7 +1,7 @@
 package com.diakogiannis.uel.moviebook.controller;
 
-import com.diakogiannis.uel.moviebook.exceptions.UserExistsException;
 import com.diakogiannis.uel.moviebook.enums.UrlBindingsEnum;
+import com.diakogiannis.uel.moviebook.exceptions.UserExistsException;
 import com.diakogiannis.uel.moviebook.model.dto.UsersDTO;
 import com.diakogiannis.uel.moviebook.model.entity.users.Users;
 import com.diakogiannis.uel.moviebook.model.mappers.UsersMapper;
@@ -28,13 +28,11 @@ import java.security.Principal;
 @RequestMapping("/user")
 public class UserController {
 
+    private final UsersMapper usersMapper;
     @Autowired
     UserService userService;
-
     @Autowired
     HttpSession session;
-
-    private final UsersMapper usersMapper;
 
     @GetMapping(path = "/principal")
     public Principal retrievePrincipal(Principal principal) {
@@ -65,8 +63,8 @@ public class UserController {
 
     @Secured("ROLE_USER")
     @GetMapping(path = "/process-login")
-    public String processLogin(Principal principal){
-        session.setAttribute("userDetailsDTO",userService.getUserDetails(principal.getName()));
+    public String processLogin(Principal principal) {
+        session.setAttribute("userDetailsDTO", userService.getUserDetails(principal.getName()));
         return "redirect:/" + UrlBindingsEnum.MOVIES_HOME_URI.getValue();
     }
 

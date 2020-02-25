@@ -33,78 +33,75 @@ import java.util.List;
 @SpringBootApplication
 public class MoviebookApplication {
 
-	public static void main(String[] args) {
-		SpringApplication.run(MoviebookApplication.class, args);
-	}
+    private static final Logger LOG = LoggerFactory.getLogger(MoviebookApplication.class);
+    @Autowired
+    DataSource dataSource;
+    @Autowired
+    PasswordEncoder passwordEncoder;
+    @Autowired
+    UserService userService;
 
-	private static final Logger LOG = LoggerFactory.getLogger(MoviebookApplication.class);
+    public static void main(String[] args) {
+        SpringApplication.run(MoviebookApplication.class, args);
+    }
 
-	@Autowired
-	DataSource dataSource;
+    /**
+     * Application Runner
+     *
+     * @param movieRepository
+     * @param ratingRepository
+     * @return
+     */
+    @Bean
+    ApplicationRunner init(MovieRepository movieRepository, RatingRepository ratingRepository) {
+        final ApplicationRunner applicationRunner = args -> {
+            ObjectMapper mapper = new ObjectMapper();
+            mapper.registerModule(new JavaTimeModule());
 
-	@Autowired
-	PasswordEncoder passwordEncoder;
+            InputStream movieInputStream = TypeReference.class.getResourceAsStream("/json/movies.json");
+            InputStream ratingInputStream = TypeReference.class.getResourceAsStream("/json/rating.json");
+            InputStream usersInputStream = TypeReference.class.getResourceAsStream("/json/users.json");
 
-	@Autowired
-	UserService userService;
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
+            mapper.setDateFormat(df);
+            mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
 
-	/**
-	 * Application Runner
-	 * @param movieRepository
-	 * @param ratingRepository
-	 * @return
-	 */
-	@Bean
-	ApplicationRunner init(MovieRepository movieRepository, RatingRepository ratingRepository) {
-		final ApplicationRunner applicationRunner = args -> {
-			ObjectMapper mapper = new ObjectMapper();
-			mapper.registerModule(new JavaTimeModule());
+            TypeReference<List<Movie>> movieTypeReference = new TypeReference<List<Movie>>() {
+            };
+            TypeReference<List<Rating>> ratingTypeReference = new TypeReference<List<Rating>>() {
+            };
+            TypeReference<List<Users>> usersTypeReference = new TypeReference<List<Users>>() {
+            };
 
-			InputStream movieInputStream = TypeReference.class.getResourceAsStream("/json/movies.json");
-			InputStream ratingInputStream = TypeReference.class.getResourceAsStream("/json/rating.json");
-			InputStream usersInputStream = TypeReference.class.getResourceAsStream("/json/users.json");
+            //import users
+            List<Users> users = mapper.readValue(usersInputStream, usersTypeReference);
+            users.forEach(user -> {
+                try {
+                    userService.registerUser(user);
+                } catch (UserExistsException e) {
+                    LOG.error("Unable to save users, server said: {}", e.getMessage(), e);
+                }
+            });
 
-			DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-			mapper.setDateFormat(df);
-			mapper.configure(SerializationFeature.WRITE_DATES_AS_TIMESTAMPS, false);
+            //Import Sample Movies
+            if (movieRepository.count() == 0) {
 
-			TypeReference<List<Movie>> movieTypeReference = new TypeReference<List<Movie>>() {
-			};
-			TypeReference<List<Rating>> ratingTypeReference = new TypeReference<List<Rating>>() {
-			};
-			TypeReference<List<Users>> usersTypeReference = new TypeReference<List<Users>>() {
-			};
-
-			//import users
-			List<Users> users = mapper.readValue(usersInputStream, usersTypeReference);
-			users.forEach(user -> {
-				try {
-					userService.registerUser(user);
-				} catch (UserExistsException e) {
-					LOG.error("Unable to save users, server said: {}", e.getMessage(), e);
-				}
-			});
-
-			//Import Sample Movies
-			if(movieRepository.count() == 0) {
-
-				try {
-					List<Movie> movies = mapper.readValue(movieInputStream, movieTypeReference);
-					movieRepository.saveAll(movies);
-					LOG.info("Movies Imported");
-					//Import Ratings
-					List<Rating> ratings = mapper.readValue(ratingInputStream,ratingTypeReference);
-					ratingRepository.saveAll(ratings);
-				} catch (IOException e) {
-					LOG.error("Unable to save movies/ratings, server said: {}", e.getMessage(), e);
-				}
-			}
+                try {
+                    List<Movie> movies = mapper.readValue(movieInputStream, movieTypeReference);
+                    movieRepository.saveAll(movies);
+                    LOG.info("Movies Imported");
+                    //Import Ratings
+                    List<Rating> ratings = mapper.readValue(ratingInputStream, ratingTypeReference);
+                    ratingRepository.saveAll(ratings);
+                } catch (IOException e) {
+                    LOG.error("Unable to save movies/ratings, server said: {}", e.getMessage(), e);
+                }
+            }
 
 
-
-		};
-		return applicationRunner;
-	}
+        };
+        return applicationRunner;
+    }
 
 
 }

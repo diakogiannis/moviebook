@@ -43,6 +43,18 @@ public class Users implements Persistable, Serializable {
     private String password;
     private Boolean enabled;
     private transient Boolean isNew;
+    @OneToMany(
+            mappedBy = "user",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<Movie> movies = new ArrayList<>();
+    @OneToMany(
+            mappedBy = "user",
+            cascade = CascadeType.ALL,
+            orphanRemoval = true
+    )
+    private List<Rating> ratings = new ArrayList<>();
 
     public Users(@NonNull String username, @NonNull String firstname, @NonNull String lastname, @NonNull String password, @NonNull Boolean enabled) {
         this.username = username;
@@ -51,20 +63,6 @@ public class Users implements Persistable, Serializable {
         this.password = password;
         this.enabled = enabled;
     }
-
-    @OneToMany(
-            mappedBy = "user",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
-    private List<Movie> movies = new ArrayList<>();
-
-    @OneToMany(
-            mappedBy = "user",
-            cascade = CascadeType.ALL,
-            orphanRemoval = true
-    )
-    private List<Rating> ratings = new ArrayList<>();
 
     @Override
     public Object getId() {

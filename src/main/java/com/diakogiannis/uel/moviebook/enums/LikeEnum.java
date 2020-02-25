@@ -9,18 +9,18 @@ public enum LikeEnum {
     HATE("hate"),
     UNDO("undo");
 
-    private String type;
-
-    LikeEnum(String type) {
-        this.type = type;
-    }
-
     private static final Map<String, LikeEnum> BY_LABEL = new HashMap<>();
 
     static {
         for (LikeEnum e : values()) {
             BY_LABEL.put(e.type, e);
         }
+    }
+
+    private String type;
+
+    LikeEnum(String type) {
+        this.type = type;
     }
 
     public static LikeEnum valueOfLabel(String type) {

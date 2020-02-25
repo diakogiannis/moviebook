@@ -19,11 +19,10 @@ import java.util.UUID;
 public class UserTests {
 
 
-    @Autowired
-    private UserService userService;
-
     private static Users user1;
     private static Users user2;
+    @Autowired
+    private UserService userService;
 
     @Before
     public void init() {
@@ -31,8 +30,6 @@ public class UserTests {
         user2 = new Users(UUID.randomUUID().toString(), "bar", "foo", "bar", true);
 
     }
-
-
 
 
     @Test(expected = UserExistsException.class)

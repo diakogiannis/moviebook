@@ -8,7 +8,7 @@ public class MovieSelfVoteException extends RuntimeException {
 
     public MovieSelfVoteException(String message, String username, Long movieId) {
 
-        super(String.format(message, username,movieId));
+        super(String.format(message, username, movieId));
     }
 
     public MovieSelfVoteException(String message, Throwable cause) {

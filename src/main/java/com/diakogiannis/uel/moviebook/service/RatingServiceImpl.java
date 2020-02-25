@@ -1,14 +1,14 @@
 package com.diakogiannis.uel.moviebook.service;
 
+import com.diakogiannis.uel.moviebook.enums.LikeEnum;
 import com.diakogiannis.uel.moviebook.exceptions.MovieDoesNotExistException;
 import com.diakogiannis.uel.moviebook.exceptions.MovieSelfVoteException;
 import com.diakogiannis.uel.moviebook.exceptions.RatingDoesNotExistException;
 import com.diakogiannis.uel.moviebook.exceptions.VoteAlreadyExistsException;
-import com.diakogiannis.uel.moviebook.repository.MovieRepository;
-import com.diakogiannis.uel.moviebook.repository.RatingRepository;
-import com.diakogiannis.uel.moviebook.enums.LikeEnum;
 import com.diakogiannis.uel.moviebook.model.entity.movies.Movie;
 import com.diakogiannis.uel.moviebook.model.entity.movies.Rating;
+import com.diakogiannis.uel.moviebook.repository.MovieRepository;
+import com.diakogiannis.uel.moviebook.repository.RatingRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Service;
@@ -36,14 +36,14 @@ public class RatingServiceImpl implements RatingService {
 
 
         // Movie does not exists, get out now!
-        if(!movie.isPresent()){
+        if (!movie.isPresent()) {
             throw new MovieDoesNotExistException("Username %s tried to rate a movie that does not exists", username);
         }
 
         Optional<Rating> rating = ratingRepository.findRatedMovie(username, movie.get().getMovieId());
 
         //Movie exists, lets move on to check the user
-        if(username.equals(movie.get().getUser().getUsername())){
+        if (username.equals(movie.get().getUser().getUsername())) {
             throw new MovieSelfVoteException("Username %s tried to self rate a movie with id %s ", username, movie.get().getMovieId());
         }
 

@@ -1,13 +1,13 @@
 package com.diakogiannis.uel.moviebook.service;
 
-import com.diakogiannis.uel.moviebook.repository.MovieRepository;
-import com.diakogiannis.uel.moviebook.repository.RatingRepository;
 import com.diakogiannis.uel.moviebook.enums.SortByEnum;
 import com.diakogiannis.uel.moviebook.model.dto.MovieRatingDTO;
 import com.diakogiannis.uel.moviebook.model.dto.UserDetailsDTO;
 import com.diakogiannis.uel.moviebook.model.entity.movies.Movie;
 import com.diakogiannis.uel.moviebook.model.entity.users.Users;
 import com.diakogiannis.uel.moviebook.model.mappers.UsersMapper;
+import com.diakogiannis.uel.moviebook.repository.MovieRepository;
+import com.diakogiannis.uel.moviebook.repository.RatingRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,14 +28,11 @@ import java.util.Optional;
 @Service
 public class MovieServiceImpl implements MovieService {
 
+    private final UsersMapper usersMapper;
     @Resource
     MovieRepository movieRepository;
-
     @Resource
     RatingRepository ratingRepository;
-
-    private final UsersMapper usersMapper;
-
     @Autowired
     HttpSession session;
 
@@ -44,8 +41,7 @@ public class MovieServiceImpl implements MovieService {
 
 
     /**
-     *
-     * @param sortBy Integer mapped by an ENUM
+     * @param sortBy           Integer mapped by an ENUM
      * @param publicIdentifier user
      * @return all movies with/out user
      */
@@ -57,8 +53,6 @@ public class MovieServiceImpl implements MovieService {
             return getAllMoviesWithUserFilterNoRatings(sortBy, publicIdentifier);
         }
     }
-
-
 
 
     private Iterable<Movie> getAllMoviesWithUserFilterNoRatings(SortByEnum sortBy, String publicIdentifier) {
@@ -99,6 +93,7 @@ public class MovieServiceImpl implements MovieService {
 
     /**
      * Saves a movie to DB
+     *
      * @param movie
      * @param username
      * @return
@@ -136,7 +131,6 @@ public class MovieServiceImpl implements MovieService {
         return movieRepository.findMovieWithUserDetails(movieId);
 
     }
-
 
 
 }

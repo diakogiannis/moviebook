@@ -37,7 +37,6 @@ public class SecurityConfiguration
     }
 
 
-
     @Override
     protected void configure(HttpSecurity httpSecurity)
             throws Exception {
@@ -58,7 +57,7 @@ public class SecurityConfiguration
                 .authenticated()
                 .and()
                 .formLogin()
-                .defaultSuccessUrl("/user/process-login",true)
+                .defaultSuccessUrl("/user/process-login", true)
                 .and()
                 .logout()
                 .logoutSuccessUrl("/")
