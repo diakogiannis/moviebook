@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.Map;
 import java.util.Optional;
 
-public interface MovieService {
+public interface   MovieService {
     Iterable<Movie> getMovies(SortByEnum sortBy, String publicIdentifier);
 
 
