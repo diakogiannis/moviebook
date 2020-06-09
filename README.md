@@ -1,4 +1,4 @@
-# moviebook
+# Social Media Platform as a Microservice PoC
 
 Demo project for UEL computing class graduate paper, yet​ ​another
 social​ ​sharing​ ​platform​ ​where​ ​users​ ​can​ ​share​ ​their​ ​favorite​ ​movies.
