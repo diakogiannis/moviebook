@@ -10,7 +10,7 @@ Other framework/libraries used are Lombok and Mapstruct. The project was primari
  
 ## Installation
 The following methods can be used  
-
+ 
 ### Docker File
 A Docker file is provided with the source code.  
 
