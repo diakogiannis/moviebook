@@ -3,6 +3,9 @@
 Demo project for UEL computing class graduate paper, yet​ ​another
 social​ ​sharing​ ​platform​ ​where​ ​users​ ​can​ ​share​ ​their​ ​favorite​ ​movies.
 
+[![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=diakogiannis_moviebook)](https://sonarcloud.io/dashboard?id=diakogiannis_moviebook)
+
+
 ## Introduction
 This application was create within the scope of of my graduate paper. The main programming framework used is **Spring Boot 2.1.7.RELEASE** with **Thymeleaf**. 
 The dependencies were check for vulnerabilities using the OWASP plugin and as expected _CVE-2019-12384, CVE-2019-12814, CVE-2019-14379, CVE-2019-14439, CVE-2018-10237, CVE-2018-1258_ were identified that do not affect the project at the current scope.
